@@ -1,17 +1,8 @@
 import moment from 'moment';
 import {userInterface} from './interface';
-import {NGUYENHANG, DINHTRONG, PHUONGANH, LAMTRUONG, ICONCOCLOCKCAL, ICONOCLOCKBLUR} from '../assets';
+import {NGUYENHANG, DINHTRONG, PHUONGANH, LAMTRUONG, DUYHOANG, TUANANH, NGOCDUY} from '../assets';
 
 const data = [
-  {
-    id: '1',
-    name: 'Nguyễn Thị Hằng',
-    age: 31,
-    gender: 'Nữ',
-    avatar: NGUYENHANG,
-    status: 'Hẹn khám',
-    timeStamp: '2020-12-08T08:00:00'
-  },
   {
     id: '2',
     name: 'Hoàng Đình Trọng',
@@ -19,54 +10,60 @@ const data = [
     gender: 'Nam',
     avatar: DINHTRONG,
     status: 'Hẹn Cafe',
-    timeStamp: '2020-12-10T06:00:00'
+    timeStamp: '2020-12-20T14:00:00'
+  },
+  {
+    id: '1',
+    name: 'Nguyễn Thị Hằng',
+    age: 31,
+    gender: 'Nữ',
+    avatar: NGUYENHANG,
+    status: 'Hẹn khám',
+    timeStamp: '2020-12-18T09:00:00'
   },
   {
     id: '3',
-    name: 'Đào Phương Anh',
-    age: 27,
-    gender: 'Nữ',
-    avatar: PHUONGANH,
-    status: 'Hẹn khám',
-    timeStamp: '2020-12-08T14:00:00'
+    name: 'Nguyễn Duy Hoàng',
+    age: 22,
+    gender: 'Nam',
+    avatar: DUYHOANG,
+    status: 'Hẹn Cafe',
+    timeStamp: '2020-12-13T21:00:00'
   },
   {
     id: '4',
-    name: 'Tiêu Lam Trường',
-    age: 45,
+    name: 'Nguyễn Ngọc Duy',
+    age: 20,
     gender: 'Nam',
-    avatar: LAMTRUONG,
-    status: 'Tư vấn y tế',
-    timeStamp: '2020-12-09T22:00:00'
+    avatar: NGOCDUY,
+    status: 'Hẹn Cafe',
+    timeStamp: '2020-12-12T02:00:00'
   },
   {
     id: '5',
-    name: 'Nguyễn Tuấn Anh',
-    age: 45,
+    name: 'Đặng Hữu Tuấn Anh',
+    age: 23,
     gender: 'Nam',
-    avatar: LAMTRUONG,
-    status: 'Hẹn khám',
-    timeStamp: '2020-12-16T22:00:00'
-  }
+    avatar: TUANANH,
+    status: 'Hẹn Cafe',
+    timeStamp: '2020-12-13T02:00:00'
+  },
 ];
 
-var curentData = data.sort((a, b) => {
-  let ta = parseInt(a.timeStamp);
-  let tb = parseInt(b.timeStamp);
-  return ta - tb;
-})
+data.sort(function (a, b) {
+  var c: any = new Date(a.timeStamp);
+  var d: any = new Date(b.timeStamp);
+  return c - d;
+});
 
 let renderData = [];
-const currentTime = moment();
-
-renderData = curentData.reduce(function (r: any, a: any) {
+renderData = data.reduce(function (r: any, a: any) {
   r[moment(a.timeStamp).format('YYYY-MM-DD')] = r[moment(a.timeStamp).format('YYYY-MM-DD')] || [];
   r[moment(a.timeStamp).format('YYYY-MM-DD')].push(a);
   return r;
 }, []);
 
 let result = [];
-
 for (let i in renderData) {
   result.push({ date: i, data: renderData[i] });
 }

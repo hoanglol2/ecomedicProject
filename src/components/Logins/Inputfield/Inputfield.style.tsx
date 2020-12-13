@@ -8,7 +8,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#BDBDBD',
     borderRadius: 5,
-    color: '#ccc',
+    color: '#333',
     paddingLeft: 88.08,
     fontSize: 20,
     lineHeight: 20,

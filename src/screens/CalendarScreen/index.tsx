@@ -1,18 +1,21 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {View, ScrollView} from 'react-native';
 import styles from './CalendarScreen.style';
 import CalendarHeader from '../../components/Calendars/CalendarHeader';
 import CalendarMain from '../../components/Calendars/CalendarMain';
+import FooterBox from '../../components/Homes/FooterBox';
+import {ICONHOME, ICONCALENDARACTIVE} from '../../assets';
 
+const CalendarScreen = ({navigation}: any) => {
+  const handleHomeOnPress = () => navigation.navigate('Home');
+  const handleUserOnPress = () => navigation.navigate('Login');
 
-
-const CalendarScreen = () => {
   return (
-    <View>
+    <ScrollView>
       <CalendarHeader/>
       <CalendarMain/>
-    </View>
+      <FooterBox handleHomeOnPress={handleHomeOnPress} handleUserOnPress={handleUserOnPress} iconHome={ICONHOME} calendarPrimary={styles.textPrimay} iconCalendar={ICONCALENDARACTIVE}/>
+    </ScrollView>
   );
 };
 

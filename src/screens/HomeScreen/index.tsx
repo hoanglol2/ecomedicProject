@@ -7,18 +7,25 @@ import HomeOption from '../../components/Homes/HomeOption';
 import HomeMore from '../../components/Homes/HomeMore';
 import HomeSeparate from '../../components/Homes/HomeSeparate';
 import FooterBox from '../../components/Homes/FooterBox';
+import HomeShare from '../../components/Homes/HomeShare';
+import {ICONHOMEACTIVE, ICONCALENDAR} from '../../assets';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const HomeScreen = ({navigation}: any) => {
+  const handleCalendarOnPress = () => navigation.navigate('Calendar');
+  const handleUserOnPress = () => navigation.navigate('Login');
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <HomeHeader/>
       <HomeStatus/>
       <HomeOption/>
       <HomeMore/>
       <HomeSeparate/>
-      <FooterBox handleOnPress={() => navigation.navigate('Calendar')}/>
-    </View>
+      <HomeShare/>
+      <FooterBox iconHome={ICONHOMEACTIVE} homePrimary={styles.textPrimay} iconCalendar={ICONCALENDAR} handleCalendarOnPress={handleCalendarOnPress} handleUserOnPress={handleUserOnPress}/>
+    </ScrollView>
   );
 };
 

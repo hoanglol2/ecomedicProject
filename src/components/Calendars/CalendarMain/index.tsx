@@ -1,22 +1,22 @@
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, ScrollView} from 'react-native';
 import styles from './CalendarMain.style';
 import {DataEcomedic} from '../../../mocks';
 import CalendarWrapContent from '../CalendarWrapContent';
+import { endOfWeek, isBefore } from 'date-fns'
 import moment from 'moment';
 
-
-
 const CalendarMain = () => {
+  const endWeek = endOfWeek(new Date(), { weekStartsOn: 1 });
+  const listThisWeek = DataEcomedic.filter((item) => isBefore(new Date(item.date), endWeek));
+  const listNextWeek = DataEcomedic.filter((item) => !isBefore(new Date(item.date), endWeek));
 
   const Separate = () => (
     <Text style={styles.separate}></Text>
   )
-
   const ThisWeek = () => (
     <Text style={styles.text}>Tuần này</Text>
   )
-
   const NextWeek = () => (
     <Text style={styles.text}>Tuần sau</Text>
   )
@@ -24,20 +24,25 @@ const CalendarMain = () => {
   return (
     <View style={styles.container}>
       <ThisWeek/>
-      {DataEcomedic.map((item: any, index: Number) => {
-        let separate = (item.date).split('-');
-        let day = separate[2];
-        let month = separate[1];
-
-        let fulltime = moment(item.date).format('LT');
-        let separate_time = fulltime.split('AM') || fulltime.split('PM');
-        let time = separate_time[0];
-
-        console.log(time);
-
-
+      {listThisWeek.map((item: any, index: Number) => {
+        let separate, day, month;
+        separate = (item.date).split('-');
+        day = separate[2];
+        month = separate[1];
         return (
-          <CalendarWrapContent time={'12:00'} key={'key-' + index} month={month} day={day} info={item.data}/>
+          <CalendarWrapContent day={day} month={month} key={'key-' + index} data={item.data}/>
+        )
+      })}
+
+      <Separate/>
+      <NextWeek/>
+      {listNextWeek.map((item: any, index: Number) => {
+        let separate, day, month;
+        separate = (item.date).split('-');
+        day = separate[2];
+        month = separate[1];
+        return (
+          <CalendarWrapContent day={day} month={month} key={'key-' + index} data={item.data}/>
         )
       })}
     </View>

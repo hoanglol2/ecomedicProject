@@ -36,7 +36,7 @@ const Inputfield = (props: PropsX) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Nhập số điện thoại</Text>
-      <TextInput style={styles.input} placeholder='0987654321'/>
+      <TextInput style={styles.input} keyboardType='numeric' placeholder='0987654321'/>
       <PickerBox styleSheet={styles.picker}/>
       <TouchableOpacity onPress={handleOnPress} style={styles.button}>
         <Text style={styles.text_button}>Gửi mã đăng nhập</Text>

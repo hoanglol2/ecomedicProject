@@ -1,23 +1,37 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Text, View, TouchableOpacity} from 'react-native';
 import styles from './FooterBox.style';
-import {ICONHOME, ICONCALENDAR, ICONPHIEU, ICONBELL, ICONUSER} from '../../../assets';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {ICONPHIEU, ICONBELL, ICONUSER} from '../../../assets';
 
-
-interface Props {
+interface childProps {
   source?: any;
-  title?: any;
-  textPrimary?: any;
-  handleOnPress: any;
+  title: string;
+  textPrimary?: object;
+  handleOnPress?: any;
 }
 
-const FooterBox = (props: Props) => {
+interface parentProps {
+  iconHome?: any;
+  iconCalendar?: any;
+  homePrimary?: object;
+  calendarPrimary?: object;
+  handleCalendarOnPress?: any;
+  handleHomeOnPress?: any;
+  handleUserOnPress?: any;
+}
 
-  const {handleOnPress} = props;
+const FooterBox = (props: parentProps) => {
+  const {
+    iconHome,
+    iconCalendar,
+    homePrimary,
+    calendarPrimary,
+    handleCalendarOnPress,
+    handleHomeOnPress,
+    handleUserOnPress
+  } = props;
 
-  const WrapIcon = (props: Props) => {
-
+  const WrapIcon = (props: childProps) => {
     const {source, title, textPrimary, handleOnPress} = props;
 
     return (
@@ -30,11 +44,11 @@ const FooterBox = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <WrapIcon handleOnPress={handleOnPress} textPrimary={styles.textPrimay} title='Trang chủ' source={ICONHOME}/>
-      <WrapIcon handleOnPress={handleOnPress} title='Lịch làm việc' source={ICONCALENDAR}/>
-      <WrapIcon handleOnPress={handleOnPress} title='Phiếu khám' source={ICONPHIEU}/>
-      <WrapIcon handleOnPress={handleOnPress} title='Thông báo' source={ICONBELL}/>
-      <WrapIcon handleOnPress={handleOnPress} title='Cá nhân' source={ICONUSER}/>
+      <WrapIcon handleOnPress={handleHomeOnPress} textPrimary={homePrimary} title='Trang chủ' source={iconHome}/>
+      <WrapIcon handleOnPress={handleCalendarOnPress} textPrimary={calendarPrimary} title='Lịch làm việc' source={iconCalendar}/>
+      <WrapIcon title='Phiếu khám' source={ICONPHIEU}/>
+      <WrapIcon title='Thông báo' source={ICONBELL}/>
+      <WrapIcon handleOnPress={handleUserOnPress} title='Cá nhân' source={ICONUSER}/>
     </View>
   );
 };

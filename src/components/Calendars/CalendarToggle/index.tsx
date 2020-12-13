@@ -12,8 +12,8 @@ const CalendarToggle = () => {
   const ToggleButton = () => (
     <Switch
       style={styles.switch}
-      trackColor={{ false: "rgba(255, 255, 255, 0.2)", true: "rgba(255, 255, 255, 0.2)" }}
-      thumbColor={isEnabled ? "#F2994A" : "#f4f3f4"}
+      trackColor={{ false: "rgba(255, 255, 255, 0.2)", true: "#fff" }}
+      thumbColor={isEnabled ? "#2D9CDB" : "#f4f3f4"}
       ios_backgroundColor="#3e3e3e"
       onValueChange={toggleSwitch}
       value={isEnabled}

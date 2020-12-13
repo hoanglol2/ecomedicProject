@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    marginTop: 180,
+    // marginTop: 180,
     borderTopWidth: 1,
     borderTopColor: 'rgba(0, 0, 0, 0.15)',
     paddingTop: 10,
@@ -22,7 +22,5 @@ export default StyleSheet.create({
     fontWeight: '600',
     color: '#666'
   },
-  textPrimay: {
-    color: '#2D9CDB'
-  }
+
 });

@@ -1,78 +1,49 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
+import {View, FlatList} from 'react-native';
 import styles from './CalendarWrapContent.style';
-import {userInterface} from '../../../mocks/interface';
-
+import CalendarDate from '../CalendarDate';
+import CalendarCard from '../CalendarCard';
+import {ICONCOCLOCKCAL, ICONOCLOCK} from '../../../assets';
+import moment from 'moment';
 
 interface Props {
-  info?: any;
-  day?: any;
-  month?: any;
-  time: any;
+  data: any;
+  day: string;
+  month: string;
 }
-
-interface PropsCard {
-  styleSheet?: any;
-  styleSheetText?: any;
-  data: userInterface;
-  time?: any;
-}
-
 
 const CalendarWrapContent = (props: Props) => {
-  const {info, day, month, time} = props;
-
-  const CalendarDate = () => {
-    return (
-      <View style={styles.dateContent}>
-        <Text style={styles.text_bold}>{day}</Text>
-        <Text style={styles.text}>{'Tháng ' + month}</Text>
-      </View>
-    )
-  }
-
-  const CalendarCard = (props: PropsCard) => {
-    const {data, styleSheet, styleSheetText, time} = props;
-
-    return (
-      <TouchableOpacity style={styles.cardContent}>
-        <View style={[styles.card, styleSheet]}>
-          <View style={styles.col_left}>
-            <Text style={styles.text_status}>{data.status}</Text>
-            <Text style={styles.text_name}>{data.name}</Text>
-            <Text style={styles.text_age}>{data.age + ' Tuổi - ' + data.gender}</Text>
-          </View>
-          <View style={styles.col_right}>
-            <View style={styles.row_r}>
-              <Text style={styleSheetText}>{time}</Text>
-              <Image style={styles.icon} source={data.icon}/>
-            </View>
-            <Image style={styles.avatar} source={data.avatar}/>
-          </View>
-        </View>
-    </TouchableOpacity>
-    )
-  }
+  const {day, month, data} = props;
 
   const renderItem = ({item}: any) => {
+    let separate_time, fullTime, time, timeToday;
 
-    if (item.time == 'Bây giờ') {
+    fullTime = moment(item.timeStamp).format('LT');
+    timeToday = moment(item.timeStamp).calendar();
+    // get time.
+    if (fullTime.includes('AM')) {
+      separate_time = fullTime.split('AM');
+    } else {
+      separate_time = fullTime.split('PM');
+    }
+    time = separate_time[0];
+    // getToday.
+    if (timeToday.includes('Today')) {
       return (
-        <CalendarCard styleSheetText={styles.text_active} styleSheet={styles.card_active} data={item}/>
+        <CalendarCard icon={ICONCOCLOCKCAL} styleSheet={styles.card_active} styleSheetText={styles.text_active} time={'Bây giờ'} data={item}/>
       )
     } else {
       return (
-        <CalendarCard data={item}/>
+        <CalendarCard icon={ICONOCLOCK} time={time} data={item}/>
       )
     }
-
   }
 
   return (
     <View style={styles.row}>
-      <CalendarDate/>
+      <CalendarDate day={day} month={month}/>
       <FlatList
-        data={info}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={null}

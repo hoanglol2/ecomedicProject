@@ -2,8 +2,7 @@ import React from 'react';
 import {Image, Text, View} from 'react-native';
 import styles from './HomeHeader.style';
 import {ICONGIRD, ICONAVATAR} from '../../../assets';
-
-
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const HomeHeader = () => {
 
@@ -16,8 +15,12 @@ const HomeHeader = () => {
 
   const HeaderRight = () => (
     <View style={styles.row}>
-      <Image source={ICONGIRD}/>
-      <Image style={styles.icon_avatar} source={ICONAVATAR}/>
+      <TouchableOpacity>
+        <Image source={ICONGIRD}/>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Image style={styles.icon_avatar} source={ICONAVATAR}/>
+      </TouchableOpacity>
     </View>
   )
 

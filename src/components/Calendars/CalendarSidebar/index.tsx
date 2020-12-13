@@ -11,7 +11,7 @@ const CalendarSidebar = () => {
       <TouchableOpacity>
         <Image source={ICONBAR}/>
       </TouchableOpacity>
-      <Text style={styles.text}>Tháng 4</Text>
+      <Text style={styles.text}>Tháng 12</Text>
     </View>
   );
 };
