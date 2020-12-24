@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import styles from './CalendarCard.style';
 import {userInterface} from '../../../mocks/interface';
@@ -10,13 +10,14 @@ interface Props {
   styleSheetText?: any;
   time: any;
   icon: any;
+  handleOnpress: any;
 }
 
 const CalendarCard = (props: Props) => {
-  const {data, styleSheet, styleSheetText, time, icon} = props;
+  const {data, styleSheet, styleSheetText, time, icon, handleOnpress} = props;
 
   return (
-    <TouchableOpacity style={styles.cardContent}>
+    <TouchableOpacity onPress={handleOnpress} style={styles.cardContent}>
         <View style={[styles.card, styleSheet]}>
           <View style={styles.col_left}>
             <Text style={styles.text_status}>{data.status}</Text>
@@ -28,7 +29,7 @@ const CalendarCard = (props: Props) => {
               <Text style={[styles.text, styleSheetText]}>{time}</Text>
               <Image style={styles.icon} source={icon}/>
             </View>
-            <Image style={styles.avatar} source={data.avatar}/>
+            <Image style={styles.avatar} source={{uri: 'https://' + data.avatar}}/>
           </View>
         </View>
     </TouchableOpacity>

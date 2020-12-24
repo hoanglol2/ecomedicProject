@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, FlatList} from 'react-native';
 import styles from './CalendarWrapContent.style';
 import CalendarDate from '../CalendarDate';
@@ -10,15 +10,16 @@ interface Props {
   data: any;
   day: string;
   month: string;
+  handleOnpress: any;
 }
 
 const CalendarWrapContent = (props: Props) => {
-  const {day, month, data} = props;
+  const {day, month, data, handleOnpress} = props;
 
   const renderItem = ({item}: any) => {
     let separate_time, fullTime, time, timeToday;
 
-    fullTime = moment(item.timeStamp).format('LT');
+    fullTime = moment(item.timeStamp).format('HH:MM');
     timeToday = moment(item.timeStamp).calendar();
     // get time.
     if (fullTime.includes('AM')) {
@@ -27,14 +28,15 @@ const CalendarWrapContent = (props: Props) => {
       separate_time = fullTime.split('PM');
     }
     time = separate_time[0];
+
     // getToday.
     if (timeToday.includes('Today')) {
       return (
-        <CalendarCard icon={ICONCOCLOCKCAL} styleSheet={styles.card_active} styleSheetText={styles.text_active} time={'Bây giờ'} data={item}/>
+        <CalendarCard handleOnpress={() => handleOnpress(item.id)} icon={ICONCOCLOCKCAL} styleSheet={styles.card_active} styleSheetText={styles.text_active} time={'Bây giờ'} data={item}/>
       )
     } else {
       return (
-        <CalendarCard icon={ICONOCLOCK} time={time} data={item}/>
+        <CalendarCard handleOnpress={() => handleOnpress(item.id)} icon={ICONOCLOCK} time={time} data={item}/>
       )
     }
   }

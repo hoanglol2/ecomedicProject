@@ -9,3 +9,7 @@ export interface userInterface {
   time?: string;
   icon?: any;
 }
+
+export interface infoCalendarDetail {
+  name: any;
+}

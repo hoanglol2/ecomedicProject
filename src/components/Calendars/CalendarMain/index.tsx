@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import React from 'react';
+import {Text, View} from 'react-native';
 import styles from './CalendarMain.style';
-import {DataEcomedic} from '../../../mocks';
 import CalendarWrapContent from '../CalendarWrapContent';
 import { endOfWeek, isBefore } from 'date-fns'
-import moment from 'moment';
+import getProfileFromServer from '../../../mocks/index';
 
-const CalendarMain = () => {
+interface Props {
+  handleOnPress: any;
+}
+
+const CalendarMain = (props: Props) => {
+
+  const {handleOnPress} = props;
+
+  const ecomedics = getProfileFromServer();
   const endWeek = endOfWeek(new Date(), { weekStartsOn: 1 });
-  const listThisWeek = DataEcomedic.filter((item) => isBefore(new Date(item.date), endWeek));
-  const listNextWeek = DataEcomedic.filter((item) => !isBefore(new Date(item.date), endWeek));
-
+  const listThisWeek = ecomedics.filter((item: any) => isBefore(new Date(item.date), endWeek));
+  const listNextWeek = ecomedics.filter((item: any) => !isBefore(new Date(item.date), endWeek));
   const Separate = () => (
     <Text style={styles.separate}></Text>
   )
@@ -29,12 +35,14 @@ const CalendarMain = () => {
         separate = (item.date).split('-');
         day = separate[2];
         month = separate[1];
+
         return (
-          <CalendarWrapContent day={day} month={month} key={'key-' + index} data={item.data}/>
+          <CalendarWrapContent handleOnpress={handleOnPress} day={day}  month={month} key={'key-' + index} data={item.data}/>
         )
       })}
 
       <Separate/>
+
       <NextWeek/>
       {listNextWeek.map((item: any, index: Number) => {
         let separate, day, month;
@@ -42,11 +50,11 @@ const CalendarMain = () => {
         day = separate[2];
         month = separate[1];
         return (
-          <CalendarWrapContent day={day} month={month} key={'key-' + index} data={item.data}/>
+          <CalendarWrapContent handleOnpress={handleOnPress} day={day} month={month} key={'key-' + index} data={item.data}/>
         )
       })}
     </View>
-  );
+  )
 };
 
 export default CalendarMain;

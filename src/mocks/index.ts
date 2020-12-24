@@ -1,71 +1,42 @@
 import moment from 'moment';
 import {userInterface} from './interface';
-import {NGUYENHANG, DINHTRONG, PHUONGANH, LAMTRUONG, DUYHOANG, TUANANH, NGOCDUY} from '../assets';
+import React, {useEffect, useState} from 'react';
 
-const data = [
-  {
-    id: '2',
-    name: 'Hoàng Đình Trọng',
-    age: 17,
-    gender: 'Nam',
-    avatar: DINHTRONG,
-    status: 'Hẹn Cafe',
-    timeStamp: '2020-12-20T14:00:00'
-  },
-  {
-    id: '1',
-    name: 'Nguyễn Thị Hằng',
-    age: 31,
-    gender: 'Nữ',
-    avatar: NGUYENHANG,
-    status: 'Hẹn khám',
-    timeStamp: '2020-12-18T09:00:00'
-  },
-  {
-    id: '3',
-    name: 'Nguyễn Duy Hoàng',
-    age: 22,
-    gender: 'Nam',
-    avatar: DUYHOANG,
-    status: 'Hẹn Cafe',
-    timeStamp: '2020-12-13T21:00:00'
-  },
-  {
-    id: '4',
-    name: 'Nguyễn Ngọc Duy',
-    age: 20,
-    gender: 'Nam',
-    avatar: NGOCDUY,
-    status: 'Hẹn Cafe',
-    timeStamp: '2020-12-12T02:00:00'
-  },
-  {
-    id: '5',
-    name: 'Đặng Hữu Tuấn Anh',
-    age: 23,
-    gender: 'Nam',
-    avatar: TUANANH,
-    status: 'Hẹn Cafe',
-    timeStamp: '2020-12-13T02:00:00'
-  },
-];
+const getProfileFromServer = () => {
+  const fetch = require("node-fetch");
+  const profileAPI = "https://5fe01c7deca1780017a311db.mockapi.io/Profile";
+  const [data, setData] = useState([]);
 
-data.sort(function (a, b) {
-  var c: any = new Date(a.timeStamp);
-  var d: any = new Date(b.timeStamp);
-  return c - d;
-});
+  // fetching our data
+  useEffect(() => {
+  fetch(profileAPI)
+    .then((response: any) => response.json())
+    .then((json: any) => setData(json))
+    .catch((err: any) => setData([]))
+  },[])
 
-let renderData = [];
-renderData = data.reduce(function (r: any, a: any) {
-  r[moment(a.timeStamp).format('YYYY-MM-DD')] = r[moment(a.timeStamp).format('YYYY-MM-DD')] || [];
-  r[moment(a.timeStamp).format('YYYY-MM-DD')].push(a);
-  return r;
-}, []);
+  // sort data.
+  data.sort(function (a: any, b: any) {
+    var c: any = new Date(a.timeStamp);
+    var d: any = new Date(b.timeStamp);
+    return c - d;
+  });
 
-let result = [];
-for (let i in renderData) {
-  result.push({ date: i, data: renderData[i] });
+  // defined data.
+  let renderData = [];
+  renderData = data.reduce(function (r: any, a: any) {
+    r[moment(a.timeStamp).format('YYYY-MM-DD')] = r[moment(a.timeStamp).format('YYYY-MM-DD')] || [];
+    r[moment(a.timeStamp).format('YYYY-MM-DD')].push(a);
+    return r;
+  }, []);
+
+  // render data.
+  let result = [];
+  for (let i in renderData) {
+    result.push({ date: i, data: renderData[i] });
+  }
+
+  return result;
 }
 
-export const DataEcomedic = result;
+export default getProfileFromServer;
